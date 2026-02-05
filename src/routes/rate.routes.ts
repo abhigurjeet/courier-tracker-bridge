@@ -4,6 +4,7 @@ import { RateController } from '../controllers/rate.controller';
 const router = express.Router();
 const rateController = new RateController();
 
+router.post('/rates/:carrier?', rateController.getRates);
 router.post('/rates', rateController.getRates);
 
 router.get('/carriers', rateController.getCarriers);

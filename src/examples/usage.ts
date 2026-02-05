@@ -10,12 +10,19 @@ async function example() {
 
     const tokenCache = new MemoryTokenCache();
 
+    const upsConfig = config.carriers.UPS;
+    if (!upsConfig) {
+      throw new Error('UPS configuration not found');
+    }
+
     const carrier = new UpsCarrier(
       {
-        baseUrl: config.ups.baseUrl,
-        clientId: config.ups.clientId,
-        clientSecret: config.ups.clientSecret,
-        authUrl: config.ups.authUrl
+        baseUrl: upsConfig.baseUrl,
+        clientId: upsConfig.clientId,
+        clientSecret: upsConfig.clientSecret,
+        authUrl: upsConfig.authUrl,
+        version: upsConfig.version,
+        requestOption: upsConfig.requestOption
       },
       tokenCache,
       30000

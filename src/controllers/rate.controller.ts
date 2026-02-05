@@ -13,6 +13,7 @@ export class RateController {
 
   getRates = async (req: Request, res: Response): Promise<void> => {
     try {
+      const carrierName = req.params.carrier || req.query.carrier || req.body.carrier || 'UPS';
       const rateRequest: RateRequest = req.body;
 
       if (!rateRequest.origin || !rateRequest.destination || !rateRequest.packages) {
@@ -23,7 +24,7 @@ export class RateController {
         return;
       }
 
-      const response = await this.carrierService.getRates(rateRequest);
+      const response = await this.carrierService.getRates(carrierName, rateRequest);
 
       res.status(200).json({
         success: true,
