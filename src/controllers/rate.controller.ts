@@ -13,7 +13,14 @@ export class RateController {
 
   getRates = async (req: Request, res: Response): Promise<void> => {
     try {
-      const carrierName = req.params.carrier || req.query.carrier || req.body.carrier || 'UPS';
+      const carrierName = req.params.carrier || req.query.carrier || req.body.carrier;
+      if (!carrierName) {
+        res.status(400).json({
+          error: 'VALIDATION_ERROR',
+          message: 'Carrier is required. Available carriers: ' + this.carrierService.getAvailableCarriers().join(', ')
+        });
+        return;
+      }
       const rateRequest: RateRequest = req.body;
 
       if (!rateRequest.origin || !rateRequest.destination || !rateRequest.packages) {

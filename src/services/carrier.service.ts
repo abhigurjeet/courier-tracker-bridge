@@ -30,12 +30,14 @@ export class CarrierService {
   }
 
   async getRates(carrierName: string, request: RateRequest): Promise<RateResponse> {
-    const carrier = this.carriers.get(carrierName.toUpperCase());
+    const normalizedName = carrierName.toUpperCase();
+    const carrier = this.carriers.get(normalizedName);
     if (!carrier) {
-      throw new CarrierError(
-        ErrorCode.API_ERROR,
-        `Carrier ${carrierName} is not available. Available carriers: ${Array.from(this.carriers.keys()).join(', ')}`
-      );
+      const available = this.getAvailableCarriers();
+      const message = available.length === 0
+        ? `No carriers are configured. Please configure at least one carrier in your environment variables.`
+        : `Carrier ${carrierName} is not available. Available carriers: ${available.join(', ')}`;
+      throw new CarrierError(ErrorCode.API_ERROR, message);
     }
     return carrier.getRates(request);
   }
