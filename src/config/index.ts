@@ -7,10 +7,6 @@ export interface Config {
     version?: string;
     requestOption?: string;
   };
-  http: {
-    timeoutMs: number;
-    retryAttempts: number;
-  };
   tokenCache: {
     ttlSeconds: number;
   };
@@ -45,10 +41,6 @@ export function loadConfig(): Config {
       authUrl: getEnvVar('UPS_AUTH_URL', 'https://onlinetools.ups.com/security/v1/oauth/token'),
       version: getEnvVar('UPS_API_VERSION', 'v2409'),
       requestOption: getEnvVar('UPS_REQUEST_OPTION', 'Rate')
-    },
-    http: {
-      timeoutMs: getEnvNumber('HTTP_TIMEOUT_MS', 30000),
-      retryAttempts: getEnvNumber('HTTP_RETRY_ATTEMPTS', 3)
     },
     tokenCache: {
       ttlSeconds: getEnvNumber('TOKEN_CACHE_TTL_SECONDS', 3600)

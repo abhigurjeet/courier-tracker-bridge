@@ -18,10 +18,9 @@ async function example() {
         authUrl: config.ups.authUrl
       },
       tokenCache,
-      config.http.timeoutMs
+      30000
     );
 
-    // Create a rate request
     const rateRequest: RateRequest = {
       origin: {
         street: ['123 Main Street'],

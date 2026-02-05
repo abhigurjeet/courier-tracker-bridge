@@ -20,7 +20,7 @@ export class CarrierService {
         requestOption: config.ups.requestOption
       },
       tokenCache,
-      config.http.timeoutMs
+      30000
     );
   }
 
